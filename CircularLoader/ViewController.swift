@@ -27,10 +27,10 @@ class ViewController: UIViewController, URLSessionDownloadDelegate {
         return .lightContent
     }
     
-    //因為回桌面在開啟App會停止動畫的bug
+    //因為回桌面再開啟App會停止動畫的bug
     private func setupNotificationObservers() {
         // NotificationCenter 觸發監聽
-        NotificationCenter.default.addObserver(self, selector: #selector(handleEnterForeground), name: .UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     @objc func handleEnterForeground() {
         animatePulsatingLayer()
@@ -43,7 +43,7 @@ class ViewController: UIViewController, URLSessionDownloadDelegate {
         layer.strokeColor = strokeColor.cgColor
         layer.lineWidth = 20
         layer.fillColor = fillColor.cgColor
-        layer.lineCap = kCALineCapRound
+        layer.lineCap = CAShapeLayerLineCap.round
         layer.position = view.center
         return layer
     }
@@ -96,7 +96,7 @@ class ViewController: UIViewController, URLSessionDownloadDelegate {
         
         animation.toValue = 1.3
         animation.duration = 0.8
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         // autoreverse 可以使動畫反向play
         animation.autoreverses = true
         // repeatCount 動畫重播次數
@@ -140,7 +140,7 @@ class ViewController: UIViewController, URLSessionDownloadDelegate {
         basicAnimation.toValue = 1
         basicAnimation.duration = 2
         //下面這兩個屬性設定是為了讓troke轉一圈後停留住
-        basicAnimation.fillMode = kCAFillModeForwards
+        basicAnimation.fillMode = CAMediaTimingFillMode.forwards
         basicAnimation.isRemovedOnCompletion = false
         
         
